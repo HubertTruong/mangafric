@@ -57,6 +57,10 @@ export class HeaderComponent implements OnInit {
     this.auth.signout();
   }
 
+  profil() {
+    this.router.navigateByUrl('/profil');
+  }
+
   home() {
     this.router.navigateByUrl('/');
   }
