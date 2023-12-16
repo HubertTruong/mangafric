@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 
@@ -21,6 +22,12 @@ export class AuthService {
     this.auth.onAuthStateChanged(user => {
       this.user$.next(user);
     });
+  }
+
+  getUserObservable(): Observable<User | undefined> {
+    return this.auth.authState.pipe(
+      map((user) => user as User | undefined)
+    );
   }
 
   async signInWithEmailPassword(email: string, password: string) {

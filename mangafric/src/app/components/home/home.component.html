@@ -1,21 +1,20 @@
 <mat-card>
   <mat-card-content>
+    <h1>Listes de mangas partenaires avec <span style="color: crimson;">MangaFric</span> :</h1>
     <div class="container-mangas">
 
-      <mat-card class="card">
+      <mat-card class="card" *ngFor="let manga of MangasService.mangas | async">
         <mat-card-header>
-          <mat-card-title>Jujutsu Kaisen</mat-card-title>
+          <mat-card-title>{{manga.title}}</mat-card-title>
         </mat-card-header>
-        <img mat-card-image src="https://m.media-amazon.com/images/I/71PBZJaSmAL._AC_UF894,1000_QL80_.jpg">
+        <img mat-card-image src="{{manga.image}}">
         <mat-card-content class="description-manga">
           <p>
-            Chaque année au Japon, on recense plus de 10 000 morts inexpliquées et portés disparus.
-            Dans la majorité des cas, ce sont les sentiments négatifs des êtres humains qui sont en cause. Souffrance,
-            regrets, humiliation : leur accumulation dans un même endroit provoque des malédictions souvent fatales…
+            {{manga.description}}
           </p>
         </mat-card-content>
         <mat-card-actions class="actions-manga">
-          <button class="btn-manga" mat-raised-button>Ajouter à ma bibliothèque
+          <button class="btn-manga" mat-raised-button (click)="addLibrary(manga.id)">Ajouter à ma bibliothèque
             <span class="material-symbols-outlined">
               bookmark
             </span>
@@ -25,95 +24,32 @@
 
       <mat-card class="card">
         <mat-card-header>
-          <mat-card-title>One Piece</mat-card-title>
+          <mat-card-title>Ajouter un manga :</mat-card-title>
         </mat-card-header>
-        <img mat-card-image src="https://m.media-amazon.com/images/I/71y+XnBXm4L._AC_UF894,1000_QL80_.jpg">
-        <mat-card-content class="description-manga">
-          <p>
-            Fortune, gloire et pouvoir, c'est ce que possédait Gold Roger, le tout puissant roi des pirates, avant de
-            mourir sur l'échafaud. Mais ses dernières paroles ont éveillées bien des convoitises, et lança la
-            fabuleuse « ère de la piraterie », chacun voulant trouver le fabuleux trésor qu'il disait avoir laissé.
-          </p>
-        </mat-card-content>
-        <mat-card-actions class="actions-manga">
-          <button class="btn-manga" mat-raised-button>Ajouter à ma bibliothèque
-            <span class="material-symbols-outlined">
-              bookmark
-            </span>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>Berserk</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="https://m.media-amazon.com/images/I/91D07epNE9L._AC_UF894,1000_QL80_.jpg">
-        <mat-card-content class="description-manga">
-          <p>
-            Dans un monde médiéval et marqué par un passé difficile, erre un mercenaire solitaire nommé Guts, décidé à
-            être seul maître de son destin. Autrefois contraint par un pari perdu à rejoindre les Faucons, une troupe
-            de mercenaires dirigés par Griffith, Guts fut acteur de nombreux combats sanglants et témoin de sombres
-            intrigues politiques. Mais il réalisa soudain que la fatalité n'existe pas et qu'il pouvait reprendre sa
-            liberté s'il le désirait vraiment…
-            Mais un mal le traque sans relâche.
-          </p>
-        </mat-card-content>
-        <mat-card-actions class="actions-manga">
-          <button class="btn-manga" mat-raised-button>Ajouter à ma bibliothèque
-            <span class="material-symbols-outlined">
-              bookmark
-            </span>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>Kingdom</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="https://m.media-amazon.com/images/I/91IhAnTuK8L._AC_UF1000,1000_QL80_.jpg">
-        <mat-card-content class="description-manga">
-          <p>
-            Au sein du Royaume de Qin vivent deux orphelins, Hyo et Shin. Au beau milieu des champs de bataille, les
-            deux frères espèrent un jour qu'eux aussi, ils pourront servir leur royaume en combattant aux côtés des
-            soldats qu'ils admirent. Alors qu'un jour, les deux orphelins se trouvent séparés, Shin décide de poursuivre
-            son chemin pour devenir un grand général.
-          </p>
-        </mat-card-content>
-        <mat-card-actions class="actions-manga">
-          <button class="btn-manga" mat-raised-button>Ajouter à ma bibliothèque
-            <span class="material-symbols-outlined">
-              bookmark
-            </span>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>Blue Lock</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="https://m.media-amazon.com/images/I/51jMLFs0YBL.jpg">
-        <mat-card-content class="description-manga">
-          <p>
-            Coupe du monde 2018, l'équipe de football du Japon est éliminée en huitièmes de finale… Ce nouvel échec
-            incite l'Union japonaise de football à fonder le « Blue Lock » : un centre de formation révolutionnaire
-            rassemblant les 300 meilleurs attaquants lycéens du pays.
-
-            L'objectif du coach du Blue Lock, Jinpachi Ego, est clair : détecter l'unique attaquant qui écrasera tous
-            ses rivaux par son talent et son hyper-individualisme ! Pour Yoichi Isagi, joueur bouillonnant encore
-            inconnu, il n'y a pas d'alternative… S'il veut survivre au programme hautement sélectif qui l'attend, il
-            devra abandonner le jeu collectif et se transcender pour devenir l'attaquant ultime !
-          </p>
-        </mat-card-content>
-        <mat-card-actions class="actions-manga">
-          <button class="btn-manga" mat-raised-button>Ajouter à ma bibliothèque
-            <span class="material-symbols-outlined">
-              bookmark
-            </span>
-          </button>
-        </mat-card-actions>
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Titre</mat-label>
+            <input matInput type="text" formControlName="title">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Lien vers l'image</mat-label>
+            <input matInput type="text" formControlName="image">
+          </mat-form-field>
+          <mat-card-content class="description-manga">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea formControlName="description" style="height: 100px;" matInput placeholder="C'est l'histoire de ..."></textarea>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions class="actions-manga">
+            <button class="btn-manga" mat-raised-button type="submit" [disabled]="!myForm.valid"
+              style="width:100%">Ajouter un manga
+              <span class="material-symbols-outlined">
+                add_circle
+              </span>
+            </button>
+          </mat-card-actions>
+        </form>
       </mat-card>
 
     </div>
