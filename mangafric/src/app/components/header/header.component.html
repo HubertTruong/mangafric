@@ -1,11 +1,11 @@
 <header>
-    <nav *ngIf="user" >
-        <button class="btn" style="border: solid 2px #fff" mat-flat-button (click)="home()">Accueil</button>
-        <button class="btn" style="border: solid 2px #fff" mat-flat-button (click)="logout()">Déconnexion</button>
+    <nav *ngIf="user">
+        <button class="btn" mat-flat-button (click)="home()">Accueil</button>
+        <button class="btn" mat-flat-button (click)="logout()">Déconnexion</button>
     </nav>
 
     <div class="page-header-container">
-        <h2>Salut !</h2>
+        <h2>MangaFric</h2>
         <button mat-icon-button aria-label="Change Theme" (click)="changeTheme()">
             <span class="material-symbols-outlined">
                 contrast

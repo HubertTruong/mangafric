@@ -1,0 +1,30 @@
+.container-mangas {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.btn-manga:hover {
+    background-color: #FFB81C;
+}
+
+.card {
+    margin: 10px;
+    max-width: 218px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    border: 1px black solid;
+    justify-content: center;
+}
+
+.description-manga {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+}
+
+.actions-manga{
+    display: flex;
+    justify-content: center;
+}
