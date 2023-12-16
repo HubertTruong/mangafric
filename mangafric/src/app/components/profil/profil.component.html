@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-content>
+    <h1>Salut ! bienvunue sur ton profil</h1>
+
+    <hr>
+
+    <div>
+      <h2>Ma bibliothèque: </h2>
+      <div class="container-library">
+        <div>
+          <h3>Manga(s): </h3>
+          <mat-selection-list #idmangas>
+            <mat-list-option *ngFor="let manga of mangas">
+              {{manga.title}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div>
+          <h3>Statistiques: </h3>
+          <p>Manga(s) dans ma bibliothèque : {{mangas.length}}</p>
+          <p>Manga(s) lu : {{idmangas.selectedOptions.selected.length}}</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div>
+      <h2>Mon classement: </h2>
+      <div cdkDropList class="manga-rank-list" (cdkDropListDropped)="drop($event)">
+        <div class="manga-rank-box" *ngFor="let manga of mangas" cdkDrag>
+          <div class="manga-rank-custom-placeholder" *cdkDragPlaceholder></div>
+          {{ manga.title }}
+          <img *cdkDragPreview [src]="manga.image" [alt]="manga.title" />
+        </div>
+      </div>
+    </div>
+
+    
+
+  </mat-card-content>
+</mat-card>
