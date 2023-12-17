@@ -1,48 +1,90 @@
-import { Component } from '@angular/core';
-import { User } from 'src/app/models/user';
-
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatSelectionListChange } from '@angular/material/list';
+
+import { User } from 'src/app/models/user';
+import { profilInterface } from 'src/app/models/profil';
+import { mangasInterface } from 'src/app/models/mangas';
+import { MangasService } from 'src/app/services/mangas.service';
+import { ProfilService } from 'src/app/services/profil.service';
+
+
 
 
 @Component({
   selector: 'profil',
   templateUrl: './profil.component.html',
-  styleUrls: ['./profil.component.scss']
+  styleUrls: ['./profil.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfilComponent {
+export class ProfilComponent implements OnInit, OnDestroy {
   user: User | null = null;
+  library: Observable<mangasInterface[]>;
+  libraryArray: mangasInterface[] = [];
+  lenghtLibrary: number = 0;
+  profilObservable: Observable<profilInterface[]>;
 
-  mangas: { title: string; image: string; }[] = [
-    {
-      title: 'Jujutsu Kaisen',
-      image: 'https://m.media-amazon.com/images/I/71PBZJaSmAL._AC_UF894,1000_QL80_.jpg',
-    },
-    {
-      title: 'One Piece',
-      image: 'https://m.media-amazon.com/images/I/71y+XnBXm4L._AC_UF894,1000_QL80_.jpg',
-    },
-    {
-      title: 'Berserk',
-      image: 'https://m.media-amazon.com/images/I/91D07epNE9L._AC_UF894,1000_QL80_.jpg',
-    },
-    {
-      title: 'Kingdom',
-      image: 'https://m.media-amazon.com/images/I/91IhAnTuK8L._AC_UF1000,1000_QL80_.jpg',
-    },
-    {
-      title: 'Blue Lock',
-      image: 'https://m.media-amazon.com/images/I/51jMLFs0YBL.jpg',
-    },
-  ];
-
+  private profilSubscription: Subscription;
+  private librarySubscription: Subscription;
 
   constructor(
-    
+    public MangasService: MangasService,
+    public ProfilService: ProfilService,
   ) {
-    
+    this.profilObservable = this.ProfilService.profilObservable
+
   }
 
-  drop(event: CdkDragDrop<{ title: string; image: string; }[]>) {
-    moveItemInArray(this.mangas, event.previousIndex, event.currentIndex);
+  ngOnInit() {
+    this.profilSubscription = this.profilObservable.subscribe((profil) => {
+      this.library = this.MangasService.getMangasByIds(profil[0]?.library);
+
+      if (this.library) {
+        this.librarySubscription = this.library.subscribe((mangas) => {
+          this.lenghtLibrary = mangas.length;
+        });
+      }
+    });
   }
+
+  onSelectionChange(event: MatSelectionListChange) {
+    const selectedManga = event.options.map(option => option.value);
+    if (event.options[0].selected) {
+      this.mangaRead(selectedManga[0]);
+    } else {
+      this.mangaUnread(selectedManga[0]);
+    }
+  }
+
+  mangaRead(selectedManga: mangasInterface) {
+    this.ProfilService.addLibrary(selectedManga.id, true);
+  }
+
+  mangaUnread(selectedManga: mangasInterface) {
+    this.ProfilService.removeLibrary(selectedManga.id, true);
+  }
+
+  checkIfIsRead(id: string | undefined) {
+    return id !== undefined ? this.ProfilService.profil.libraryRead.includes(id) : false;
+  }
+
+  drop(event: CdkDragDrop<mangasInterface[]>) {
+    if (this.ProfilService.profil) {
+      moveItemInArray(this.ProfilService.profil.library, event.previousIndex, event.currentIndex);
+      this.ProfilService.updateOrder([...this.ProfilService.profil.library]);
+      this.library = this.MangasService.getMangasByIds(this.ProfilService.profil.library);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.profilSubscription) {
+      this.profilSubscription.unsubscribe();
+    }
+
+    if (this.librarySubscription) {
+      this.librarySubscription.unsubscribe();
+    }
+  }
+
 }

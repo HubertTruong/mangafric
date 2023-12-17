@@ -14,11 +14,21 @@
           </p>
         </mat-card-content>
         <mat-card-actions class="actions-manga">
-          <button class="btn-manga" mat-raised-button (click)="addLibrary(manga.id)">Ajouter à ma bibliothèque
-            <span class="material-symbols-outlined">
-              bookmark
-            </span>
-          </button>
+          <div *ngIf="checkIfIsInLibrary(manga.id); then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+            <button class="btn-manga" disabled mat-raised-button>Déjà dans ma bibliothèque
+              <span class="material-symbols-outlined fill-true">
+                bookmarks
+              </span>
+            </button>
+          </ng-template>
+          <ng-template #elseBlock>
+            <button class="btn-manga" mat-raised-button (click)="addLibrary(manga.id)">Ajouter à ma bibliothèque
+              <span class="material-symbols-outlined">
+                bookmark
+              </span>
+            </button>
+          </ng-template>
         </mat-card-actions>
       </mat-card>
 

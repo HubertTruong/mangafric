@@ -34,7 +34,6 @@ export class AuthService {
     try {
       await this.auth.signInWithEmailAndPassword(email, password);
       this.router.navigateByUrl('/');
-      console.log('signInWithEmailPassword');
     }
     catch (e) {
       console.log(e);
