@@ -59,6 +59,7 @@ export class ProfilComponent implements OnInit, OnDestroy {
 
   mangaRead(selectedManga: mangasInterface) {
     this.ProfilService.addLibrary(selectedManga.id, true);
+
   }
 
   mangaUnread(selectedManga: mangasInterface) {

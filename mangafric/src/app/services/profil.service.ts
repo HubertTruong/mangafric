@@ -98,11 +98,13 @@ export class ProfilService {
             .catch((error) => {
               console.error('Error updating document:', doc.id, error);
             });
+
         });
       })
       .catch((error) => {
         console.error('Error querying documents:', error);
       });
+
   }
 
   removeLibrary(id: string | undefined, isRead: boolean) {
