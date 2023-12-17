@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { mangasInterface } from 'src/app/models/mangas';
 import { MangasService } from 'src/app/services/mangas.service';
+import { ProfilService } from 'src/app/services/profil.service';
 
 
 @Component({
@@ -17,19 +18,8 @@ export class HomeComponent {
 
   constructor(
     public MangasService: MangasService,
+    public ProfilService: ProfilService,
   ) {
-
-    this.MangasService.mangas.subscribe(
-      (value) => {
-        console.log('Received value:', value);
-      },
-      (error) => {
-        console.error('Error:', error);
-      },
-      () => {
-        console.log('Observable completed.');
-      }
-    );
 
     this.myForm = new FormGroup({
       title: new FormControl('', [
@@ -45,7 +35,11 @@ export class HomeComponent {
   }
 
   addLibrary(id: string | undefined) {
-    console.log(id);
+    this.ProfilService.addLibrary(id, false);
+  }
+
+  checkIfIsInLibrary(id: string | undefined) {
+    return id !== undefined ? this.ProfilService.profil.library.includes(id) : false;
   }
 
   onSubmit() {

@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-content>
+  <mat-card-content *ngIf="profilObservable | async; else loading">
     <h1>Salut ! bienvunue sur ton profil</h1>
 
     <hr>
@@ -9,15 +9,17 @@
       <div class="container-library">
         <div>
           <h3>Manga(s): </h3>
-          <mat-selection-list #idmangas>
-            <mat-list-option *ngFor="let manga of mangas">
-              {{manga.title}}
-            </mat-list-option>
+          <mat-selection-list #idmangas (selectionChange)="onSelectionChange($event)">
+            <div *ngFor="let manga of library | async;">
+              <mat-list-option  [value]="manga" [selected]="checkIfIsRead(manga.id)">
+                {{manga.title}}
+              </mat-list-option>
+            </div>
           </mat-selection-list>
         </div>
         <div>
           <h3>Statistiques: </h3>
-          <p>Manga(s) dans ma bibliothèque : {{mangas.length}}</p>
+          <p>Manga(s) dans ma bibliothèque : {{lenghtLibrary}}</p>
           <p>Manga(s) lu : {{idmangas.selectedOptions.selected.length}}</p>
         </div>
       </div>
@@ -26,11 +28,11 @@
     <hr>
 
     <div>
-      <h2>Mon classement: </h2>
+      <h2>Mon classement des mangas : </h2>
       <div cdkDropList class="manga-rank-list" (cdkDropListDropped)="drop($event)">
-        <div class="manga-rank-box" *ngFor="let manga of mangas" cdkDrag>
+        <div class="manga-rank-box" *ngFor="let manga of library | async; let i = index" cdkDrag>
           <div class="manga-rank-custom-placeholder" *cdkDragPlaceholder></div>
-          {{ manga.title }}
+          <span style="color: #ff0000; font-weight: bolder;">Top {{ i + 1 }}</span> : {{ manga.title }}
           <img *cdkDragPreview [src]="manga.image" [alt]="manga.title" />
         </div>
       </div>
@@ -39,4 +41,5 @@
     
 
   </mat-card-content>
+  <ng-template #loading>Chargement...</ng-template>
 </mat-card>
