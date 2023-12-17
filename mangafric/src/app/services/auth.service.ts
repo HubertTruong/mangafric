@@ -41,9 +41,9 @@ export class AuthService {
 
   }
 
-  signUpWithEmailPassword(email: string, password: string) {
+  async signUpWithEmailPassword(email: string, password: string) {
     try {
-      this.auth.createUserWithEmailAndPassword(email, password);
+      await this.auth.createUserWithEmailAndPassword(email, password);
       this.router.navigateByUrl('/');
     }
     catch (e) {

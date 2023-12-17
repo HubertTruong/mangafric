@@ -36,6 +36,7 @@ export class HomeComponent {
 
   addLibrary(id: string | undefined) {
     this.ProfilService.addLibrary(id, false);
+
   }
 
   checkIfIsInLibrary(id: string | undefined) {
